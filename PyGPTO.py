@@ -1,20 +1,23 @@
 # =========================================================================
 # 
-# GPTO
+# PyGPTO
 # 
 # A Python/Numpy adaptation of the MATLAB code for topology optimization 
 # with bars using the geometry projection method.
-# Version 0.5 -- April 2021
+# Version 0.9.0 -- August 2021
 #
-# Original Authors: Hollis Smith and Julian Norato
+# This code is a migration to Python written by
+#
+# Andres Ortegon
+# Department of Mathematics
+# National Unversity of Colombia
+#
+# of the GPTO Matlab code written by
+#
+# Hollis Smith and Julian Norato
 # Department of Mechanical Engineering
 # University of Connecticut
-
-# Translator: Andres Ortegon
-# Departamento de Matemáticas
-# Universidad Nacional de Colombia
 #
-# ORIGINAL COMENTS:
 #
 # Disclaimer
 # ==========
