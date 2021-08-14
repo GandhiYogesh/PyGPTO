@@ -109,11 +109,11 @@ GEOM['initial_design'] = {
 # want a design with fixed bar radii, simply set both fields to the same
 # value.
 GEOM['min_bar_radius'] = 0.5
-GEOM['max_bar_radius'] = 0.51
+GEOM['max_bar_radius'] = 0.501
 ## =======================================================================    
 ## Finite element solver
 FE['analysis'] = {'solver':{}}
-FE['analysis']['solver']['type'] = 'iterative' # 'direct'  # Options: 'direct' or 'iterative'
+FE['analysis']['solver']['type'] = 'direct' # 'direct'  # Options: 'direct' or 'iterative'
 FE['analysis']['solver']['tol'] = 1e-5          # only for iterative
 FE['analysis']['solver']['maxit'] = 1e4         # only for iterative
 FE['analysis']['solver']['use_gpu'] = False 
@@ -165,7 +165,7 @@ OPT['parameters']['penalization_param'] = 3
 OPT['options'] = {}
 # Optimizer (options: 'default' and 'mma')
 # OPT['options']['optimizer'] = 'default'
-OPT['options']['optimizer'] = 'mma'
+OPT['options']['optimizer'] = 'default'
 # Whether plots should be produced or not 
 OPT['options']['plot'] = plot_cond 
 # Write to a vkt file options are 'none', 'last' (only write last 
@@ -176,11 +176,11 @@ OPT['options']['vtk_output_path'] = 'output_files'
 # whether to scale the design variables to the range [0,1]
 OPT['options']['dv_scaling'] = True 
 # Move limits as a fraction of the range between bounds 
-OPT['options']['move_limit'] = 0.05 
+OPT['options']['move_limit'] = 0.1 
 # Maximum number of iterations 
-OPT['options']['max_iter'] = 10
+OPT['options']['max_iter'] = 50
 # Minimum step size in design
-OPT['options']['step_tol'] = 2e-3 
+OPT['options']['step_tol'] = 1e-3
 # Convergence tolerance on KKT norm
 OPT['options']['kkt_tol'] = 1e-4 
 
