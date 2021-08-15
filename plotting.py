@@ -255,7 +255,9 @@ def plot_design(*args):
 
     if FE['dim'] == 2:
         ax = plt.gca()    
+        t  = ax.get_title()
         ax.cla()
+        t  = ax.set_title(t)
     elif FE['dim'] == 3: 
         ax = plt.gca()
         ax.remove() 

@@ -292,20 +292,24 @@ def smooth_max(x,p,form_def,x_min):
 
     elif form_def == 'mod_p-mean':
         # in this case, we assume x >= 0 
-        N = np.size(x,0)
+        N = x.shape[0]
         S = ( x_min**p + (1-x_min**p)*np.sum(x**p,axis=0)/N )**(1/p)
         dSdx = (1-x_min**p)*(1/N)*(x/S)**(p-1)         
 
     elif form_def == 'KS':
-        epx = np.exp(x)
-        S = x_min + (1-x_min)*np.log( np.sum(epx(x),axis=0) )/p
-        dSdx = (1-x_min)*np.epx( p*x )/np.sum(epx(x),axis=0)
+        epx = np.exp(p*x)
+        sum_epx = np.sum( epx ,axis=0)
 
+        S    = x_min + (1-x_min) * np.log(sum_epx)/p
+        dSdx = (1-x_min) * epx / sum_epx
     elif form_def == 'KS_under':
         # note: convergence might be fixed with Euler-Gamma
         N = x.shape[0]
-        S = x_min + (1-x_min)*np.log( np.sum( np.exp(x) ,axis=0) /N) / p 
-        dSdx = (1-x_min)*np.exp( p*x ) / np.sum(np.exp(x),axis=0)
+        epx = np.exp(p*x)
+        sum_epx = np.sum( epx ,axis=0)
+
+        S    = x_min + (1-x_min)*np.log( sum_epx/N ) / p 
+        dSdx = (1-x_min) * epx / sum_epx
     else:
         print('\nsmooth_max received invalid form_def.\n')
     

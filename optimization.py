@@ -122,7 +122,7 @@ def runopt(FE,OPT,GEOM,x0,obj,nonlcon):
                 figure = plt.figure(1)
                 # figure.canvas.manager.window.wm_geometry("+500+0")
 
-            stop = False
+        stop = False
         return stop   
 
     history = {}
