@@ -162,7 +162,7 @@ OPT['parameters']['penalization_param'] = 3
 ## =======================================================================        
 ## Optimization parameters
 OPT['options'] = {}
-# Optimizer (options: 'fmincon-active-set' and 'mma')
+# Optimizer (options: 'default' and 'mma')
 # OPT['options']['optimizer'] = 'default'
 OPT['options']['optimizer'] = 'mma'
 # Whether plots should be produced or not 

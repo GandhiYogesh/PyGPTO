@@ -64,6 +64,10 @@ exec(open('get_inputs.py').read())
 ## Start timer
 tic = time.perf_counter()
 
+## Use these lines if you want to load a geometry
+# import pickle
+# GEOM = pickle.load(open("initial_geometry_path.pickle", "rb"))
+
 ## Initialization
 init_FE(FE,OPT,GEOM)
 init_geometry(FE,OPT,GEOM)

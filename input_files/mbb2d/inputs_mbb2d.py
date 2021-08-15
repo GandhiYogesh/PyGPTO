@@ -164,7 +164,7 @@ OPT['parameters']['penalization_param'] = 3
 ## =======================================================================        
 ## Optimization parameters
 OPT['options'] = {}
-# Optimizer (options: 'fmincon-active-set' and 'mma')
+# Optimizer (options: 'default' and 'mma')
 # OPT['options']['optimizer'] = 'default'
 OPT['options']['optimizer'] = 'mma'
 # Whether plots should be produced or not 
@@ -177,9 +177,9 @@ OPT['options']['vtk_output_path'] = 'output_files'
 # whether to scale the design variables to the range [0,1]
 OPT['options']['dv_scaling'] = True 
 # Move limits as a fraction of the range between bounds 
-OPT['options']['move_limit'] = 0.05 
+OPT['options']['move_limit'] = 0.0505
 # Maximum number of iterations 
-OPT['options']['max_iter'] = 100
+OPT['options']['max_iter'] = 300
 # Minimum step size in design
 OPT['options']['step_tol'] = 1e-2
 # Convergence tolerance on KKT norm

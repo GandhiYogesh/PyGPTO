@@ -52,6 +52,7 @@ FE['mesh_input']['type'] = 'generate'
 # the rectangle/cuboid and the number of elements along each direction:
 FE['mesh_input']['box_dimensions'] = np.array( (20,10,10) )
 FE['mesh_input']['elements_per_side'] = np.array( (80,40,40) )
+# FE['mesh_input']['elements_per_side'] = np.array( (20,10,10) )
 
 # If mesh input type is 'read-home-made', you must provide a
 # mesh file name including extension (*.mat).
@@ -158,8 +159,8 @@ OPT['parameters']['penalization_param'] = 3
 ## =======================================================================        
 ## Optimization parameters
 OPT['options'] = {}
-# Optimizer (options: 'fmincon-active-set' and 'mma')
-OPT['options']['optimizer'] = 'default'
+# Optimizer (options: 'default' and 'mma')
+OPT['options']['optimizer'] = 'mma'
 # OPT['options']['optimizer'] = 'mma'
 # Whether plots should be produced or not 
 OPT['options']['plot'] = plot_cond 
@@ -173,7 +174,7 @@ OPT['options']['dv_scaling'] = True
 # Move limits as a fraction of the range between bounds 
 OPT['options']['move_limit'] = 0.1 
 # Maximum number of iterations 
-OPT['options']['max_iter'] = 1
+OPT['options']['max_iter'] = 300
 # Minimum step size in design
 OPT['options']['step_tol'] = 1e-2
 # Convergence tolerance on KKT norm

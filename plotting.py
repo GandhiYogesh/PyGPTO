@@ -76,7 +76,6 @@ def plot_density_levelsets(fig):
         levels = [.25,.5,.75]
 
 
-
 def plot_density_cells(fig):
     # Plot the density field into the specified figure
     global FE, OPT
@@ -255,11 +254,13 @@ def plot_design(*args):
     figu = plt.figure(fig)    
 
     if FE['dim'] == 2:
-        ax = plt.gca()
+        ax = plt.gca()    
         ax.cla()
     elif FE['dim'] == 3: 
+        ax = plt.gca()
+        ax.remove() 
         ax = plt.axes(projection='3d')
-        ax.cla()
+        
     
     for b in range(0,n_bar):
         Alpha = alpha[b]**2
@@ -325,27 +326,26 @@ def plot_history(fig):
 
     plt.subplot(2,1,1)
     a = plt.semilogy( OPT['history']['fval'].T )
-    plt.title( 'Objective history' )
-    plt.xlabel( 'Iteration' )
-    plt.legend( OPT['functions']['f'][0]['name'] )
+    plt.title( 'Objective and Constraint history' )
+    plt.legend( [OPT['functions']['f'][0]['name']] )
 
     if 'fconsval' in OPT['history']:
-        print(OPT['history']['fconsval'].shape)
         g = OPT['history']['fconsval'].\
             reshape( ( -1 , OPT['functions']['n_func']-1 ) ) + \
             OPT['functions']['constraint_limit']
         
-        label = {}
+        label = []
         scale = np.ones((1,OPT['functions']['n_func']-1))
         
         for i in range( 1 , OPT['functions']['n_func'] ):
-            label[i-1] = OPT['functions']['f'][i]['name']
+            label.append( OPT['functions']['f'][i]['name'] )
             if 'angle constraint' ==  OPT['functions']['f'][i]['name']:
                 scale[i-1] = OPT['options']['angle_constraint']['scale']
         
         plt.subplot(2,1,2)
-        plt.plot( g/scale )
-        plt.title( 'Constraint history' )
+        plt.plot( range(0,len(g)) , g/scale , 'c-' , 
+            np.array((0,len(g)-1)) , OPT['functions']['constraint_limit']*np.ones((2)) , 'k--' )
+        # plt.title( 'Constraint history' )
         plt.xlabel( 'Iteration' )
         plt.legend( label )
     
@@ -368,8 +368,7 @@ def writevtk(folder, name_prefix, iteration):
     if not os.path.isdir( OPT['options']['vtk_output_path'] ):
         os.mkdir( OPT['options']['vtk_output_path'] )
 
-    num_digits = len( str(OPT['options']['max_iter']) )
-    name_sufix = ('#0' + str(num_digits) + '{it}' ).format( it=iteration )
+    name_sufix = '{it:0>3d}'.format( it=iteration )
     filename = name_prefix + name_sufix + '.vtk'
     filename = folder + '/' + filename
     
@@ -391,7 +390,10 @@ def writevtk(folder, name_prefix, iteration):
     fid.write( "POINTS " + str(FE['n_node']) + " float \n" )
     for inode in range(0,FE['n_node']):
         if FE['dim'] == 2:
-            fid.write(  '{0:f} {1:f} \n'.format( coords[0, inode] , coords[1, inode] ) )
+            if inode == 0:
+                fid.write(  '{0:f} {1:f} \n'.format( coords[0, inode] , coords[1, inode] ) )
+            else:
+                fid.write(  '{0:f} {1:f} {2:f} \n'.format( 0.0 , coords[0, inode] , coords[1, inode] ) )
         elif FE['dim'] == 3:
             fid.write(  '{0:f} {1:f} {2:f} \n'.format( coords[0, inode] , 
                 coords[1, inode] , coords[2, inode] ) )

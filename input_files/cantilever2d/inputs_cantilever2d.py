@@ -165,7 +165,7 @@ OPT['parameters']['penalization_param'] = 3
 OPT['options'] = {}
 # Optimizer (options: 'default' and 'mma')
 # OPT['options']['optimizer'] = 'default'
-OPT['options']['optimizer'] = 'default'
+OPT['options']['optimizer'] = 'mma'
 # Whether plots should be produced or not 
 OPT['options']['plot'] = plot_cond 
 # Write to a vkt file options are 'none', 'last' (only write last 
@@ -178,7 +178,7 @@ OPT['options']['dv_scaling'] = True
 # Move limits as a fraction of the range between bounds 
 OPT['options']['move_limit'] = 0.1 
 # Maximum number of iterations 
-OPT['options']['max_iter'] = 50
+OPT['options']['max_iter'] = 300
 # Minimum step size in design
 OPT['options']['step_tol'] = 1e-3
 # Convergence tolerance on KKT norm

@@ -112,13 +112,15 @@ def runopt(FE,OPT,GEOM,x0,obj,nonlcon):
     def plotfun(iter):
         if OPT['options']['plot'] == True:
             plot_design(0)
-            plt.title( 'design, iteration = {iter}'.format(iter=iter) )
-            figure = plt.figure(0)
+            ax = plt.gca()
+            ax.set_title( 'design, iteration = {iter}'.format(iter=iter) )
+
             # figure.canvas.manager.window.wm_geometry("+0+0")
 
-            plot_density(1)
-            figure = plt.figure(1)
-            # figure.canvas.manager.window.wm_geometry("+500+0")
+            if FE['dim'] == 2:
+                plot_density(1)
+                figure = plt.figure(1)
+                # figure.canvas.manager.window.wm_geometry("+500+0")
 
             stop = False
         return stop   
