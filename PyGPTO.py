@@ -1,8 +1,8 @@
 # =========================================================================
-# 
+#
 # PyGPTO
-# 
-# A Python/Numpy adaptation of the MATLAB code for topology optimization 
+#
+# A Python/Numpy adaptation of the MATLAB code for topology optimization
 # with bars using the geometry projection method.
 # Version 0.9.0 -- August 2021
 #
@@ -29,11 +29,11 @@
 # License
 # =======
 # This software is released under the Creative Commons CC BY-NC 4.0
-# license. As such, you are allowed to copy and redistribute the material 
-# in any medium or format, and to remix, transform, and build upon the 
-# material, as long as you: 
-# a) give appropriate credit, provide a link to the license, and indicate 
-# if changes were made. You may do so in any reasonable manner, but not in 
+# license. As such, you are allowed to copy and redistribute the material
+# in any medium or format, and to remix, transform, and build upon the
+# material, as long as you:
+# a) give appropriate credit, provide a link to the license, and indicate
+# if changes were made. You may do so in any reasonable manner, but not in
 # any way that suggests the licensor endorses you or your use.
 # b) do not use it for commercial purposes.
 #
@@ -42,17 +42,19 @@
 #
 # Smith, H. and Norato, J.A. "A MATLAB code for topology optimization
 # using the geometry projection method."
-# Structural and Multidisciplinary Optimization, 2020,
+# Structural and Multidisciplinary €Optimization, 2020,
 # https://doi.org/10.1007/s00158-020-02552-0
 #
 # =========================================================================
 
-## source folders containing scripts not in this folder
+# source folders containing scripts not in this folder
+import pickle
 import time
 
+from simp_dens import*
 from geometry_projection import *
-from mesh_utilities import *
 from FE_routines import *
+from LP_routines_v1 import *
 from optimization import *
 from functions import *
 from utilities import *
@@ -61,37 +63,53 @@ from plotting import *
 
 exec(open('get_inputs.py').read())
 
-## Start timer
+# Start timer
 tic = time.perf_counter()
 
-## Use these lines if you want to load a geometry
-# import pickle
+# Use these lines if you want to load a geometry
 # GEOM = pickle.load(open("initial_geometry_path.pickle", "rb"))
 
-## Initialization
-init_FE(FE,OPT,GEOM)
-init_geometry(FE,OPT,GEOM)
-init_optimization(FE,OPT,GEOM)
+# Initialization
+init_simp_dens(FE, OPT, GEOM)
+init_FE(FE, OPT, GEOM)
+init_geometry(FE, OPT, GEOM)
+init_optimization(FE, OPT, GEOM)
+# init_orthotropic_lamina(FE, OPT)
 
-## Analysis
-perform_analysis(FE,OPT,GEOM) 
 
-## Finite difference check of sensitivities
+# Analysis
+perform_analysis(FE, OPT, GEOM)
+
+# Finite difference check of sensitivities
 # (If requested)
 if OPT['make_fd_check']:
     run_finite_difference_check()
 
-## Optimization
-OPT['history'] = runopt(FE,OPT,GEOM,OPT['dv'], obj , nonlcon )
+
+# Optimization
+OPT['history'] = runopt(FE, OPT, GEOM, OPT['dv'], obj, nonlcon)
+
 
 # Report time
 toc = time.perf_counter()
-print( "Elapsed time: " + str( toc - tic ) )
+print("Elapsed time: " + str(toc - tic))
 
 # hold graph
 plt.ioff()
 
+FE_pickle = open("FE_init", "wb")
+pickle.dump(FE, FE_pickle)
+FE_pickle.close()
+
+OPT_pickle = open("OPT_init", "wb")
+pickle.dump(OPT, OPT_pickle)
+OPT_pickle.close()
+
+GEOM_pickle = open("GEOM_init", "wb")
+pickle.dump(GEOM, GEOM_pickle)
+GEOM_pickle.close()
+
+
 # ## Plot History
 if True == OPT['options']['plot']:
     plot_history(2)
-
